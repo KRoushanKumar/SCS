@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<title>Home Page</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<link  rel="stylesheet" href="myStyle.css">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous" type="text/javascript"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous" type="text/javascript"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous" type="text/javascript"></script>
+
+</head>
+
+<body>
+	<!-- Header -->
+	<div th:insert="Header :: head"></div>
+	<!-- Header -->
+
+
+	<p class="text-center mt-3 mb-3">Welcome to the MANIT Communication System home page!</p>
+
+	<div class="container">
+		<div class="row ">
+			<div class="col-md-4 chatArea" style="background-color: #f1f1f1; overflow: scroll;">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="student: ${students}">
+							<td th:text="${student.firstName+' ' + student.lastName}"></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-md-8 chatArea" style="background-color:#ede5e5;padding-left: 0px;padding-right: 0px;">
+				<div class="">
+					<label class="groupNameArea">Group name</label>
+				</div>
+				<div class="messageSendArea" >
+					<div style="overflow-y:scroll;height:400px">
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="groupChat: ${groupChat}">
+									<td th:text="${groupChat.text}"></td>
+									<td th:text="${groupChat.userName}"></td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<form th:action="@{/SendMessage/send}" 
+						  	   th:object="${message}" method="Post">
+					  <span>
+					  		<input class="inputArea" th:field="*{text}" type="text" placeholder="Type your message" >
+					  		<!-- <input class="SendButton" type="button" onclick="$.post(/SendMessage/send)" value="send"> -->
+					  		<!-- 
+					  		<button class="btn btn-success btn-lg" onclick="$.post('/waiter/order/2/menu?product=Glenkinchie')">Glenkinchie</button>
+					  		 -->
+					  		 <input class="SendButton" type="submit"  value="send">
+					  </span>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- <div th:insert="Footer :: foot"></div> -->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

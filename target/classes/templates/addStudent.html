@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Student</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous" type="text/javascript"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous" type="text/javascript"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous" type="text/javascript"></script>
+<style>
+.error {
+	color: red
+}
+</style>
+
+
+
+
+
+<script type="text/javascript">
+            function Validate()
+            {
+                var e = document.getElementById("dropYear");
+                var d = document.getElementById("dropDepart");
+                var strYear = e.options[e.selectedIndex].value;
+                var strdepart = d.options[d.selectedIndex].value;
+                
+                var strYearValue = e.options[e.selectedIndex].text;
+                if(strYear==0)
+                {
+                    alert("Please select a admission year");
+                    
+                }
+                
+                if(strdepart==0)
+                {
+                    alert("Please select a Department ");
+                    
+                }
+                
+                
+            }
+            function validateFile(){
+            	var allowedFiles = [".csv"];
+                var fileUpload = document.getElementById("CSVInput");
+                var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+                if (!regex.test(fileUpload.value.toLowerCase())) {
+                    
+                    alert("Please upload files having extensions: " + allowedFiles.join(', ') + " only.");
+                    return false;
+                }
+                
+                return true;
+            	} 
+        </script>
+
+<script>
+		debugger
+		function ShowImg(){
+			  const [file] = imgInp.files
+			  if (file) {
+			    blah.src = URL.createObjectURL(file)
+			  }
+			}
+	</script>
+</head>
+<body>
+
+
+	<div class="container mt-4">
+
+		<div class="form-group">
+			<div class="col-xs-15">
+				<div>
+
+					<!--  error -->
+					<div th:if="${error}"
+						class="alert alert-danger col-xs-offset-1 col-xs-10">
+						<span th:text="${error}"></span>
+						
+						</div>
+
+					<!-- sucsess -->
+					<div th:if="${sucsess}"
+						class="alert alert-success col-xs-offset-1 col-xs-10">
+						New Student Added</div>
+					<div th:if="${required}"
+						class="alert alert-success col-xs-offset-1 col-xs-10">
+					   <span th:text="${required}"></span>	
+					</div>	
+						
+						
+
+				</div>
+			</div>
+		</div>
+
+		<form th:action="@{/systems/addStudentProcess}" 
+					  th:object="${student}"
+					  method="POST"
+					  >
+					<div class="row mb-3">
+						<label for="scholarNo" class="col-sm-2 col-form-label">Scholar No.</label>
+						<div class="col-sm-10">
+							<input type="number" class="form-control" id="scholarNo" th:field=*{scholarNo} placeholder="eg: 202120000">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="firstName" th:field=*{firstName} placeholder="First name">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="lastName" class="col-sm-2 col-form-label" >Last Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="lastName" th:field=*{lastName} placeholder="Last name">
+						</div>
+					</div>
+				
+					
+					<button type="submit" class="btn btn-primary">Add</button>
+					<a th:href="@{/systems}" class="btn btn-secondary">back</a>
+					
+				</form>
+				<br>
+				<br>
+				<form th:action="@{/systems/addStudentProcessWithCSV}" 
+
+					  method="POST"
+					  enctype="multipart/form-data"
+					  >
+					  <input type="file" accept=".csv" class="form-control" name="CSVInput" id="CSVInput" >
+					  <br>
+					  <button type="submit" class="btn btn-primary" onclick="validateFile()">Add With CSV File</button>
+				</form>
+				
+				
+			</div>
+
+</body>
+</html>
